@@ -1,0 +1,343 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  body, input, a, button, input::placeholder, select {
+    font-family: "Raleway", sans-serif;
+  }
+
+  body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .header h1 {
+    color: #326074;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .scanner-container {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(50, 96, 116, 0.1);
+    overflow: hidden;
+  }
+
+  .scanner-header {
+    background: #326074;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .scanner-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .scanner-header p {
+    font-size: 14px;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+
+  #reader {
+    position: relative;
+    padding: 20px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #reader > div {
+    width: 100% !important;
+    max-width: 350px !important;
+  }
+
+  #reader video {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  #reader__scan_region {
+    border-radius: 12px !important;
+  }
+
+  #reader__dashboard {
+    margin-top: 20px !important;
+  }
+
+  #reader__dashboard_section {
+    background: #f8f9fa !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+    border: none !important;
+  }
+
+  #reader__dashboard_section_csr {
+    color: #326074 !important;
+    font-weight: 500 !important;
+  }
+
+  #reader__dashboard_section_csr select {
+    background: white !important;
+    border: 2px solid #e9ecef !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    color: #495057 !important;
+    font-size: 14px !important;
+    margin-top: 8px !important;
+  }
+
+  #reader__dashboard_section_csr select:focus {
+    outline: none !important;
+    border-color: #326074 !important;
+  }
+
+  .instructions {
+    background: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .instructions h3 {
+    color: #326074;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .instructions p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .status-indicator::before {
+    content: "📹";
+    margin-right: 8px;
+  }
+
+  #loader {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    z-index: 9999;
+    top: 0;
+    flex-direction: column;
+  }
+
+  .loader {
+    width: 60px;
+    aspect-ratio: 4;
+    --c:#326074 90%,#0000;
+    background: 
+      radial-gradient(circle closest-side at left  6px top 50%,var(--c)),
+      radial-gradient(circle closest-side                     ,var(--c)),
+      radial-gradient(circle closest-side at right 6px top 50%,var(--c));
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    animation: l4 1s infinite alternate;
+    margin-bottom: 20px;
+  }
+
+  @keyframes l4 {
+    to{width:25px;aspect-ratio: 1}
+  }
+
+  .loader-text {
+    color: #326074;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .footer p {
+    color: #999;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 15px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+    }
+
+    .header p {
+      font-size: 14px;
+    }
+
+    .scanner-container {
+      border-radius: 12px;
+    }
+
+    .scanner-header {
+      padding: 16px;
+    }
+
+    .scanner-header h2 {
+      font-size: 18px;
+    }
+
+    .scanner-header p {
+      font-size: 13px;
+    }
+
+    #reader {
+      padding: 15px;
+      min-height: 350px;
+    }
+
+    .instructions {
+      padding: 16px;
+    }
+
+    .instructions h3 {
+      font-size: 16px;
+    }
+
+    .instructions p {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+    }
+
+    #reader {
+      min-height: 300px;
+      padding: 12px;
+    }
+
+    .scanner-header {
+      padding: 14px;
+    }
+
+    .instructions {
+      padding: 14px;
+    }
+
+    .status-indicator {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+</style>
+<div class="header">
+  <h1>Attendance Scanner</h1>
+  <p>Scan QR code to mark your attendance</p>
+</div>
+<div class="scanner-container">
+  <div class="scanner-header">
+    <h2>QR Code Scanner</h2>
+    <p>Position the QR code within the camera frame</p>
+  </div>
+<div id="reader"></div>
+<div class="footer">
+  <p>Secure attendance tracking system</p>
+</div>
+<div id="loader" style="display:none;"><div class="loader"></div></div>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+  const admission = localStorage.getItem("s_local");
+  if (!admission) {
+    alert("Not logged in");
+    window.location.href = "login.html";
+  }
+
+  function onScanSuccess(decodedText) {
+    document.getElementById("reader").style.display = "none";
+    document.getElementById("loader").style.display = "flex";
+    const scannedDate = decodedText.split(" ")[0];
+
+    fetch(`https://script.google.com/macros/s/AKfycbzIJIYI1pZ3MPWFHl5C93Tlxypnzuuw7zABplsy8JHspclTFnj0u97s0vRHALTSNb4C7g/exec?check=1&admission=${admission}`)
+      .then(res => res.json())
+      .then(existing => {
+        const existingDates = existing.date ? existing.date.split(",").map(d => d.trim()) : [];
+        if (existingDates.includes(scannedDate)) {
+          alert("Already marked attendance for today.");
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("reader").style.display = "block";
+          return;
+        }
+
+        fetch("https://script.google.com/macros/s/AKfycbzIJIYI1pZ3MPWFHl5C93Tlxypnzuuw7zABplsy8JHspclTFnj0u97s0vRHALTSNb4C7g/exec", {
+          method: "POST",
+          body: JSON.stringify({ admission: admission })
+        }).then(() => {
+          window.location.href = "index.html";
+        });
+      });
+  }
+
+  const html5QrCode = new Html5Qrcode("reader");
+  Html5Qrcode.getCameras().then(devices => {
+    const backCamera = devices.find(d => d.label.toLowerCase().includes("back")) || devices[0];
+    html5QrCode.start(
+      { deviceId: { exact: backCamera.id } },
+      { fps: 10, qrbox: 250 },
+      onScanSuccess
+    );
+  });
+</script>

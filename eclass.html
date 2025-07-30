@@ -1,0 +1,239 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, input, a, button, input::placeholder, select {
+    font-family: "Raleway", sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+#loader {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    z-index: 9999;
+    top: 0;
+}
+
+.loader {
+    width: 60px;
+    aspect-ratio: 4;
+    --c:#326074 90%,#0000;
+    background: 
+        radial-gradient(circle closest-side at left  6px top 50%,var(--c)),
+        radial-gradient(circle closest-side                     ,var(--c)),
+        radial-gradient(circle closest-side at right 6px top 50%,var(--c));
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    animation: l4 1s infinite alternate;
+}
+
+@keyframes l4 {
+    to{width:25px;aspect-ratio: 1}
+}
+
+.header {
+    background: #326074;
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header p {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+#container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.teacher-card {
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.teacher-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(50, 96, 116, 0.15);
+    border-color: #326074;
+}
+
+.teacher-link {
+    display: block;
+    color: #326074;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.teacher-link:hover {
+    color: #2a5161;
+}
+
+.teacher-link::after {
+    content: "→";
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.teacher-link:hover::after {
+    transform: translateX(3px);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+}
+
+.empty-state h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #326074;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem 0;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    #container {
+        margin: 1rem auto;
+        padding: 0 0.75rem;
+    }
+    
+    .teacher-card {
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .teacher-link {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0.75rem 0;
+    }
+    
+    .header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .teacher-card {
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    
+    .teacher-link {
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+<div class="header">
+    <h1>Online Classes</h1>
+</div>
+
+<div id="loader" style="display:none;">
+    <div class="loader"></div>
+</div>
+
+<div id="container"></div>
+
+<script>
+const admission = localStorage.getItem("s_local");
+if (!admission) {
+    alert("Not logged in");
+    window.location.href = "login.html";
+}
+
+document.getElementById("loader").style.display = "flex";
+
+fetch(`https://script.google.com/macros/s/AKfycbyRbA5qMt5o4wk02XuM1FqpICVsZMxHZbRop_aF-kuGcyTZr0R4EMlJubi_45IwfEK1Aw/exec?load=1&admission=${admission}`)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("loader").style.display = "none";
+        const container = document.getElementById("container");
+        
+        if (data.length === 0) {
+            const emptyDiv = document.createElement("div");
+            emptyDiv.className = "empty-state";
+            emptyDiv.innerHTML = `
+                <h3>No Teachers Found</h3>
+                <p>No teacher resources are available at the moment.</p>
+            `;
+            container.appendChild(emptyDiv);
+            return;
+        }
+
+        data.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "teacher-card";
+
+            const link = document.createElement("a");
+            link.href = item.url;
+            link.innerText = item.teacher;
+            link.target = "_blank";
+            link.className = "teacher-link";
+
+            div.appendChild(link);
+            container.appendChild(div);
+        });
+    })
+    .catch(error => {
+        document.getElementById("loader").style.display = "none";
+        const container = document.getElementById("container");
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "empty-state";
+        errorDiv.innerHTML = `
+            <h3>Error Loading Data</h3>
+            <p>Please try again later.</p>
+        `;
+        container.appendChild(errorDiv);
+    });
+</script>

@@ -1,0 +1,45 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="loader.css">
+<link rel="stylesheet" href="style.css">
+<div class="image">
+  <img src="https://miro.medium.com/v2/resize:fit:1080/0*G_W4PEC6F5eZePDU.jpg" alt="">
+</div>
+<div class="login">
+  <div class="text">
+    <h2>Welcome To,</h2>
+    <h3 class="animation-h3">Coaching Name</h3>
+  </div>
+  <input type="number" id="admission" placeholder="Admission No." class="int">
+  <input type="number" id="phone" placeholder="Phone" class="int">
+  <button onclick="login()" class="btn">Login</button>
+</div>
+<div id="loader" style="display:none;"><div class="loader"></div></div>
+<script>
+  if (localStorage.getItem("s_local")) {
+    window.location.href = "index.html";
+  }
+
+  async function login() {
+    const admission = document.getElementById("admission").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    if (!admission || !phone) {
+      alert("Enter admission number and phone");
+      return;
+    }
+
+    document.getElementById("loader").style.display = "flex";
+
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbyMDBJCSNuFZLjm0RuA6Cs7zs3EymV6Do8aFos95S2KRttG4LOuWMTCWNAMFwcSNaJKbg/exec?login=1`);
+    const data = await res.json();
+    const match = data.find(s => s.admission === admission && s.phone === phone);
+
+    if (match) {
+      localStorage.setItem("s_local", admission);
+      window.location.href = "index.html";
+    } else {
+      alert("Invalid credentials");
+      document.getElementById("loader").style.display = "none";
+    }
+  }
+</script>

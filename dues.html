@@ -1,0 +1,435 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pay Dues</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #FFF;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 450px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.loader {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  z-index: 9999;
+  top: 0;
+}
+
+.loader-spinner {
+  width: 60px;
+  aspect-ratio: 4;
+  --c:#326074 90%,#0000;
+  background: 
+    radial-gradient(circle closest-side at left  6px top 50%,var(--c)),
+    radial-gradient(circle closest-side                     ,var(--c)),
+    radial-gradient(circle closest-side at right 6px top 50%,var(--c));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  animation: l4 1s infinite alternate;
+}
+
+@keyframes l4 {
+    to{width:25px;aspect-ratio: 1}
+}
+
+.loader-text {
+  color: #666;
+  font-size: 16px;
+}
+
+.no-dues {
+  text-align: center;
+  padding: 40px 20px;
+  color: #28a745;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.payment-section {
+  text-align: center;
+}
+
+.amount-display {
+  background: #326074;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.amount-label {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 5px;
+}
+
+.amount-value {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.upi-section {
+  margin-bottom: 30px;
+}
+
+.upi-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.upi-icon {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.upi-text {
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.qr-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border: 2px dashed #e0e0e0;
+}
+
+.qr-code {
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.scan-text {
+  color: #666;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.upload-section {
+  margin-top: 30px;
+}
+
+.upload-label {
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.file-input-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.file-input {
+  position: absolute;
+  left: -9999px;
+}
+
+.file-input-label {
+  display: block;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px dashed #ced4da;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+  font-size: 14px;
+}
+
+.file-input-label:hover {
+  border-color: #667eea;
+  background: #326074;
+  color: #FFF;
+}
+
+.file-input-label.has-file {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+.file-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: #326074;
+  color: #ffffff;
+  border: none;
+  border-radius: 125px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.payment-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.payment-icon {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+}
+
+.gpay { background: linear-gradient(135deg, #4285f4, #34a853); color: white; }
+.phonepe { background: linear-gradient(135deg, #5f259f, #3c1361); color: white; }
+.paytm { background: linear-gradient(135deg, #00baf2, #0082c8); color: white; }
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(40, 167, 69, 0.1);
+  border-radius: 8px;
+  color: #28a745;
+  font-size: 14px;
+}
+
+.security-icon {
+  width: 16px;
+  height: 16px;
+  background: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+  }
+  
+  .amount-value {
+    font-size: 28px;
+  }
+}
+</style>
+<div id="loader" class="loader" style="display:none;">
+    <div class="loader-spinner"></div>
+    <div class="loader-text" style="display: none;">Loading payment details...</div>
+  </div>
+<div class="container">
+  <div id="container"></div>
+</div>
+
+<script>
+const admission = localStorage.getItem("s_local");
+if (!admission) {
+  alert("Not logged in");
+  window.location.href = "login.html";
+}
+
+document.getElementById("loader").style.display = "flex";
+
+fetch(`https://script.google.com/macros/s/AKfycbyYQt9h6JwjsUxnnzUXKTD7e_TA_pm2gRoA15xXpfbM488xRTFka8N2q3npVx6qh163Zw/exec?load=1&admission=${admission}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("loader").style.display = "none";
+    const container = document.getElementById("container");
+    
+    if (data.due == 0) {
+      container.innerHTML = '<div class="no-dues">✅ No Dues Found</div>';
+      return;
+    }
+
+    const upiLink = `upi://pay?pa=${data.upi}&pn=${data.merchant}&mc=123456&tid=ORDER1234&txn=TXN1234&am=${data.due}&cu=INR`;
+    const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+    
+    container.innerHTML = `
+      <div class="payment-section">
+        <div class="amount-display">
+          <div class="amount-label">Amount Due</div>
+          <div class="amount-value">₹${data.due}</div>
+        </div>
+        
+        <div class="payment-icons">
+          <div class="payment-icon gpay">GPay</div>
+          <div class="payment-icon phonepe">PhonePe</div>
+          <div class="payment-icon paytm">Paytm</div>
+        </div>
+        
+        <div class="upi-section">
+          <div class="upi-header">
+            <div class="upi-icon">UPI</div>
+            <div class="upi-text">Scan QR Code</div>
+          </div>
+          
+          <div class="qr-container">
+            <img src="${qrURL}" alt="UPI QR Code" class="qr-code">
+            <div class="scan-text">Scan with any UPI app to pay</div>
+          </div>
+        </div>
+        
+        <div class="upload-section">
+          <div class="upload-label">Upload Payment Screenshot</div>
+          <div class="file-input-container">
+            <input type="file" accept="image/*" id="image" class="file-input">
+            <label for="image" class="file-input-label" id="fileLabel">
+              <div class="file-icon">📁</div>
+              Choose payment screenshot
+            </label>
+          </div>
+          
+          <button class="submit-btn" id="submitBtn">Submit Payment</button>
+          
+          <div class="security-badge">
+            <div class="security-icon">🔒</div>
+            <span>Your payment is secure and encrypted</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const fileInput = document.getElementById("image");
+    const fileLabel = document.getElementById("fileLabel");
+    const submitBtn = document.getElementById("submitBtn");
+
+    fileInput.addEventListener("change", function() {
+      if (this.files[0]) {
+        fileLabel.classList.add("has-file");
+        fileLabel.innerHTML = `
+          <div class="file-icon">✅</div>
+          ${this.files[0].name}
+        `;
+      }
+    });
+
+    submitBtn.onclick = async () => {
+      const file = fileInput.files[0];
+      if (!file) return alert("Please upload payment screenshot first");
+      
+      submitBtn.innerHTML = "Processing...";
+      submitBtn.disabled = true;
+      
+      try {
+        const form = new FormData();
+        form.append("image", file);
+        
+        const imgbb = await fetch("https://api.imgbb.com/1/upload?key=a1aab7277069e3d6fa62ab397ae5dfca", {
+          method: "POST",
+          body: form
+        });
+        
+        const imgData = await imgbb.json();
+        const imageUrl = imgData.data.url;
+        
+        await fetch("https://script.google.com/macros/s/AKfycbyYQt9h6JwjsUxnnzUXKTD7e_TA_pm2gRoA15xXpfbM488xRTFka8N2q3npVx6qh163Zw/exec", {
+          method: "POST",
+          body: JSON.stringify({
+            admission: admission,
+            amount: data.due,
+            image: imageUrl
+          })
+        });
+        
+        alert("Payment submitted successfully!");
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Error submitting payment. Please try again.");
+        submitBtn.innerHTML = "Submit Payment";
+        submitBtn.disabled = false;
+      }
+    };
+  })
+  .catch(error => {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("container").innerHTML = '<div class="no-dues">❌ Error loading payment details</div>';
+  });
+</script>

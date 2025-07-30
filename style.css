@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+body , input, a , button , input::placeholder , select {
+    font-family: "Raleway", sans-serif;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 20px;
+    background: #FFF;
+    margin: -35px 0;
+    border-radius: 25px;
+}
+.image > img {
+    width: 85%;
+    overflow: hidden;
+}
+.image {
+    background: #326074;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px 60px 10px;
+}
+.animation > h2 {
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: 1.2;
+    text-transform: uppercase;
+}
+.text {
+    margin: 12px 0 8px 0;
+}
+.int {
+    padding: 12px 18px;
+    border-radius: 125px;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    letter-spacing: 1.2;
+    background: #e4e4e4dd;
+}
+.int::placeholder {
+    font-weight: 500;
+    letter-spacing: 1.2;
+}
+.btn {
+    background: #326074;
+    border: none;
+    border-radius: 125px;
+    padding: 12px;
+    color: #FFF;
+    text-transform: uppercase;
+    letter-spacing: 1.4;
+    font-weight: 500;
+}
+.greet-text {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+    letter-spacing: 1.2;
+    text-transform: uppercase;
+}

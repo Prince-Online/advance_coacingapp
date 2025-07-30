@@ -1,0 +1,106 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<script src="https://kit.fontawesome.com/8aa17a250d.js" crossorigin="anonymous"></script>
+<style>
+    * , i {
+        overflow: hidden;
+    }
+    body {
+        color: #101010;
+        background: url(https://thumb.ac-illust.com/ea/ea66d9dbfcf54d7cc3f92273229213e8_t.jpeg);
+    }
+    .greet {
+        display: flex;
+        flex-direction: column;
+    }
+    a {
+        text-decoration: none;
+        color: #101010;
+    }
+    .header {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 15px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .body {
+        background: #ade6e1;
+        opacity: 0.85;
+        height: 100vh;
+        width: 100vw;
+    }
+    .body > h2 {
+        margin: 25px 15px 0 15px;
+        font-size: 22px;
+        letter-spacing: 1.3;
+        font-weight: bold;
+        height: 55px;
+        text-transform: uppercase;
+        text-decoration: underline;
+        text-underline-offset: 6.5px;
+    }
+    .link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        border-radius: 12px;
+        background: #dddd;
+        width: 120px;
+        height: 90px;
+        gap: 12px;
+    }
+    .links {
+        display: flex;
+        justify-content: space-around;
+        margin: 0 0 20px 0;
+    }
+    .link > i {
+        font-size: 42px;
+    }
+    .link > span {
+        font-size: 15px;
+        letter-spacing: 1.1;
+        font-weight: 500;
+    }
+</style>
+<div class="body">
+    <div class="header">
+        <h2 class="greet-text">Welcome To,</h2>
+        <h2 class="greet-text">Coaching Name</h2>
+    </div>
+    <h2>Searching For</h2>
+    <div class="links">
+        <a href="dues.html" class="link">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Fee Payment</span>
+        </a>
+        <a href="attandance.html" class="link">
+            <i class="fa-solid fa-clipboard-user"></i>
+            <span>Attendance</span>
+        </a>
+    </div>
+    <div class="links">
+        <a href="eclass.html" class="link">
+            <i class="fa-solid fa-video"></i>
+            <span>Online Class</span>
+        </a>
+        <a href="e_test.html" class="link">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Online Test</span>
+        </a>
+    </div>
+    <div class="links">
+        <a href="notice.html" class="link">
+            <i class="fa-solid fa-clipboard"></i>
+            <span>Notice</span>
+        </a>
+        <a href="profile.html" class="link">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+</div>
+<script src="script.js"></script>
